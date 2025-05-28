@@ -1,0 +1,87 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1-add-users-and-periods
+      author: up156
+      changes:
+        - insert:
+            tableName: users
+            columns:
+              - column: { name: id, valueNumeric: 1 }
+              - column: { name: name, value: "Иванов Иван Иванович" }
+        - insert:
+            tableName: users
+            columns:
+              - column: { name: id, valueNumeric: 2 }
+              - column: { name: name, value: "Петров Петр Петрович" }
+        - insert:
+            tableName: users
+            columns:
+              - column: { name: id, valueNumeric: 3 }
+              - column: { name: name, value: "Сидорова Анна Васильевна" }
+        - insert:
+            tableName: notification_period
+            columns:
+              - column: { name: id, valueNumeric: 1 }
+              - column: { name: user_id, valueNumeric: 1 }
+              - column: { name: day_of_week, value: "MONDAY" }
+              - column: { name: time_from, value: "08:00:00" }
+              - column: { name: time_to, value: "12:00:00" }
+        - insert:
+            tableName: notification_period
+            columns:
+              - column: { name: id, valueNumeric: 2 }
+              - column: { name: user_id, valueNumeric: 1 }
+              - column: { name: day_of_week, value: "FRIDAY" }
+              - column: { name: time_from, value: "09:00:00" }
+              - column: { name: time_to, value: "11:30:00" }
+        - insert:
+            tableName: notification_period
+            columns:
+              - column: { name: id, valueNumeric: 3 }
+              - column: { name: user_id, valueNumeric: 2 }
+              - column: { name: day_of_week, value: "WEDNESDAY" }
+              - column: { name: time_from, value: "02:27:00" }
+              - column: { name: time_to, value: "13:00:00" }
+        - insert:
+            tableName: notification_period
+            columns:
+              - column: { name: id, valueNumeric: 4 }
+              - column: { name: user_id, valueNumeric: 2 }
+              - column: { name: day_of_week, value: "SATURDAY" }
+              - column: { name: time_from, value: "14:00:00" }
+              - column: { name: time_to, value: "17:00:00" }
+        - insert:
+            tableName: notification_period
+            columns:
+              - column: { name: id, valueNumeric: 5 }
+              - column: { name: user_id, valueNumeric: 3 }
+              - column: { name: day_of_week, value: "TUESDAY" }
+              - column: { name: time_from, value: "09:30:00" }
+              - column: { name: time_to, value: "12:30:00" }
+        - insert:
+            tableName: notification_period
+            columns:
+              - column: { name: id, valueNumeric: 6 }
+              - column: { name: user_id, valueNumeric: 3 }
+              - column: { name: day_of_week, value: "SUNDAY" }
+              - column: { name: time_from, value: "16:00:00" }
+              - column: { name: time_to, value: "19:00:00" }
+        - sql:
+            splitStatements: false
+            dbms: postgresql
+            sql: |
+              SELECT setval(pg_get_serial_sequence('users', 'id'), 3, true);
+              SELECT setval(pg_get_serial_sequence('notification_period', 'id'), 6, true);
+
+  - changeSet:
+      id: 2-set-sequences
+      author: up156
+      changes:
+        - sql:
+            dbms: postgresql
+            splitStatements: false
+            sql: SELECT setval('users_id_seq', (SELECT MAX(id) FROM users));
+        - sql:
+            dbms: postgresql
+            splitStatements: false
+            sql: SELECT setval('notification_period_id_seq', (SELECT MAX(id) FROM notification_period));
