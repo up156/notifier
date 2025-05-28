@@ -30,10 +30,11 @@
 
 ## Быстрый старт
 
-Клонируйте репозиторий  
+1. Клонируйте репозиторий  
 git clone https://github.com/up156/notifier.git  
-mvn clean package  
-docker-compose up --build  
-Swagger:  
+2. mvn clean package  
+3. docker-compose up --build  
+4. Swagger:  
 После запуска перейдите по адресу:  
 http://localhost:8080/swagger-ui.html  
+5. Postman-коллекция (`notifier.postman_collection.json`) лежит в корне проекта. Импортируйте её в Postman для быстрого запуска и тестирования сценариев.
